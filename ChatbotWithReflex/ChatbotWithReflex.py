@@ -14,7 +14,7 @@ class State(rx.State):
 def index() -> rx.Component:
     # Welcome Page (Index)
     return rx.container(
-        rx.color_mode.button(position="top-right"),
+        rx.color_mode.button(position="top-left"),
         rx.vstack(
             rx.heading("Welcome to Reflex!", size="9"),
             rx.text(
