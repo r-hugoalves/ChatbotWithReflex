@@ -31,6 +31,7 @@ def chat() -> rx.Component:
 def action_bar() -> rx.Component:
     return rx.hstack(
         rx.input(
+            value=State.question,
             placeholder="Ask a question",
             on_change=State.set_question,
             style=style.input_style,
