@@ -30,8 +30,17 @@ def chat() -> rx.Component:
         ]
     )
     
+def action_bar() -> rx.Component:
+    return rx.hstack(
+        rx.input(placeholder="Ask a question"),
+        rx.button("Ask!")
+    )
+    
 def index() -> rx.Component:
-    return rx.container(chat())
+    return rx.container(
+        chat(),
+        action_bar(),
+    )
 
 app = rx.App()
 app.add_page(index)
