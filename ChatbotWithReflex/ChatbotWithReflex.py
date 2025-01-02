@@ -3,6 +3,7 @@
 import reflex as rx
 from rxconfig import config
 from ChatbotWithReflex import style
+from ChatbotWithReflex.states import State
 
 def qa(question: str, answer:str) -> rx.Component:
     return rx.box(
@@ -20,32 +21,26 @@ def qa(question: str, answer:str) -> rx.Component:
     )
     
 def chat() -> rx.Component:
-    qa_pairs = [
-        (
-            "Quem é você?",
-            "Eu sou um WebApp em Python!"
-        ),
-        (
-            "Construído por quem?",
-            "Por Hugo R. Alves"
-        )
-    ]
-    
     return rx.box(
-        *[
-            qa(question, answer)
-            for question, answer in qa_pairs
-        ]
+        rx.foreach(
+            State.chat_history,
+            lambda messages: qa(messages[0], messages[1]),
+        )
     )
     
 def action_bar() -> rx.Component:
     return rx.hstack(
         rx.input(
             placeholder="Ask a question",
+            on_change=State.set_question,
             style=style.input_style,
         ),
         
-        rx.button("Ask!", style=style.button_style),
+        rx.button(
+            "Ask!",
+            on_click=State.answer,
+            style=style.button_style,
+        ),
     )
     
 def index() -> rx.Component:
