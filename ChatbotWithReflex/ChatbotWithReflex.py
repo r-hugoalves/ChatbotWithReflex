@@ -4,36 +4,34 @@ import reflex as rx
 
 from rxconfig import config
 
-
-class State(rx.State):
-    """The app state."""
-
-    ...
-
-
-def index() -> rx.Component:
-    # Welcome Page (Index)
-    return rx.container(
-        rx.color_mode.button(position="top-left"),
-        rx.vstack(
-            rx.heading("Welcome to Reflex!", size="9"),
-            rx.text(
-                "Get started by editing ",
-                rx.code(f"{config.app_name}/{config.app_name}.py"),
-                size="5",
-            ),
-            rx.link(
-                rx.button("Check out our docs!"),
-                href="https://reflex.dev/docs/getting-started/introduction/",
-                is_external=True,
-            ),
-            spacing="5",
-            justify="center",
-            min_height="85vh",
-        ),
-        rx.logo(),
+def qa(question: str, answer:str) -> rx.Component:
+    return rx.box(
+        rx.box(question, text_align="right"),
+        rx.box(answer, text_align="left"),
+        margin_y="1em",
     )
-
+    
+def chat() -> rx.Component:
+    qa_pairs = [
+        (
+            "Quem é você?",
+            "Eu sou um WebApp em Python!"
+        ),
+        (
+            "Construído por quem?",
+            "Por Hugo R. Alves"
+        )
+    ]
+    
+    return rx.box(
+        *[
+            qa(question, answer)
+            for question, answer in qa_pairs
+        ]
+    )
+    
+def index() -> rx.Component:
+    return rx.container(chat())
 
 app = rx.App()
 app.add_page(index)
